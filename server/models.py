@@ -122,4 +122,10 @@ class WorkoutExercise(db.Model):
     @validates('reps', 'sets', 'duration_seconds')
     def validate_positive(self, key, value):
         if value is not None and (
-            not isinstance(value, int) or isinstance(value,
+            not isinstance(value, int) or isinstance(value, bool) or value <= 0
+        ):
+            raise ValueError(f'{key} must be a positive integer.')
+        return value
+
+    def __repr__(self):
+        return f'<WorkoutExercise {self.id}: workout {self.workout_id}, exercise {self.exercise_id}>'
